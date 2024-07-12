@@ -6,6 +6,7 @@ const BlogPost = sequelize.define('BlogPost', {
   id: {
     type: DataTypes.STRING,
     primaryKey: true,
+    autoIncrement: true
   },
   title: {
     type: DataTypes.STRING,
@@ -20,7 +21,7 @@ const BlogPost = sequelize.define('BlogPost', {
     allowNull: true,
   },
   userId: {
-    type: DataTypes.STRING,
+    type: DataTypes.INTEGER,
     allowNull: false,
     references: {
       model: User,
@@ -28,7 +29,7 @@ const BlogPost = sequelize.define('BlogPost', {
     },
   },
 }, {
-  tableName: 'blogPosts',
+ 
   timestamps: true, 
 });
 

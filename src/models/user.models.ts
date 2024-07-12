@@ -5,8 +5,9 @@ import { DataTypes } from 'sequelize';
 
 const User = sequelize.define('User', {
   id: {
-    type: DataTypes.STRING,
+    type: DataTypes.INTEGER,
     primaryKey: true,
+    autoIncrement: true,
   },
   displayName: {
     type: DataTypes.STRING,
@@ -15,6 +16,7 @@ const User = sequelize.define('User', {
   name: {
     type: DataTypes.STRING,
     allowNull: false,
+    unique : true
   },
   email: {
     type: DataTypes.STRING,
@@ -25,8 +27,12 @@ const User = sequelize.define('User', {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  accessToken : {
+    type: DataTypes.STRING,
+    allowNull: true,
+  }
 }, {
-  tableName: 'users',
+ 
   timestamps: true,
 });
 
