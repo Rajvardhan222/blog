@@ -1,11 +1,17 @@
 import User from "@/models/user.models";
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 import bcrypt from "bcrypt";
 import jwt from 'jsonwebtoken'
 export const verifyUser = async (req: NextRequest) => {
     try {
         const token = req.cookies.get("token")?.value || '';
+
+        if (!token) {
+            return {error: "Invalid token"}
+            
+        }
        let decodedValue = jwt.verify(token,process.env.TOKEN_SECRET!)
+
 
      let user =  await User.findByPk(decodedValue.id, {
         attributes :{
@@ -14,18 +20,15 @@ export const verifyUser = async (req: NextRequest) => {
      })
 
      if (!user) {
-        return NextResponse.json(
+        return 
             {
                 error : 'Invalid token'
             }
-        )
+        
      }
 
-     return user;
+     return user || "";
     } catch (error : any) {
-        return NextResponse.json({
-            error : 'Cant verify user at this time',
-            errorMessage : error.message
-        })
+        return new Error('You do not have a valid token! ')
     }
 }

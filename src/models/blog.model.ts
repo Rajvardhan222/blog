@@ -2,9 +2,9 @@ import { DataTypes } from 'sequelize';
 import { sequelize } from '../dbConfig/dbconfig';
 import User from '../models/user.models';
 
-const BlogPost = sequelize.define('BlogPost', {
+const Blog = sequelize.define('Blog', {
   id: {
-    type: DataTypes.STRING,
+    type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true
   },
@@ -34,7 +34,7 @@ const BlogPost = sequelize.define('BlogPost', {
 });
 
 
-User.hasMany(BlogPost, { foreignKey: 'userId' });
-BlogPost.belongsTo(User, { foreignKey: 'userId' });
+User.hasMany(Blog, { foreignKey: 'userId' });
+Blog.belongsTo(User, { foreignKey: 'userId' });
 
-export default BlogPost;
+export default Blog;
