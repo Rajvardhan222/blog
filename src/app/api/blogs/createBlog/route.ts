@@ -18,6 +18,8 @@ export const POST = async (req: NextRequest, res: NextResponse) => {
     }
     
     let reqForm = await req.formData();
+    console.log(reqForm);
+    
 
     const file: File | null = reqForm.get("image") as File;
 

@@ -7,7 +7,9 @@ export const POST = async (req: NextRequest) => {
         const reyBody = await req.json()
         const {email , password} = reyBody
 
-        const existingUser = await User.findOne({ email :email });
+        const existingUser = await User.findOne({
+            where : {email : email}
+        });
 
         if(!existingUser){
             return NextResponse.json(
@@ -20,7 +22,11 @@ export const POST = async (req: NextRequest) => {
 
 
         const isPasswordMatch =  bcrypt.compareSync(password, existingUser.password);
+console.log(password,existingUser.password);
 console.log(isPasswordMatch);
+
+
+
 
         if(!isPasswordMatch){
             return NextResponse.json(
@@ -41,9 +47,17 @@ console.log(isPasswordMatch);
 
         await existingUser.save()
 
+        let user = await User.findByPk(existingUser.id,{
+            attributes :{
+                exclude: ['password']
+            }
+        })
+
       let response =  NextResponse.json({
             success : true,
-            message : "Login successful"
+            user : user,
+            message : "Login successful",
+        
         })
 
         response.cookies.set('token',token,{

@@ -19,7 +19,8 @@ export const POST = async (req: NextRequest) => {
     }
 
     let token = bcrypt.hashSync(password, 10);
-
+    console.log(password,token);
+    
     const user = await User.create({
       displayName,
       name,
